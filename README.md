@@ -46,17 +46,17 @@ from itertools import combinations
 def generate_candidates(dataset, k):
     c = defaultdict(int)
     for seq in dataset:
-        # flatten into list of items (your version mixes strings/lists)
         flat_seq = []
         for itemset in seq:
             if isinstance(itemset, str):
-                flat_seq.extend(itemset.split(','))   # split commas
+                flat_seq.extend(itemset.split(','))
             else:
                 flat_seq.extend(itemset)
-        # ensure uniqueness per sequence
+
+        # count each combination once per sequence
         for comb in set(combinations(sorted(flat_seq), k)):
             c[comb] += 1
-    # collect all frequent patterns
+
     res = {}
     for item, support in c.items():
         if support >= min_support:
@@ -67,37 +67,44 @@ def generate_candidates(dataset, k):
 def gsp(dataset, min_support):
     k = 1
     fp = defaultdict(int)
-    seq=dataset
     while True:
-        c = generate_candidates(seq, k)
+        c = generate_candidates(dataset, k)
         if not c:
             break
         fp.update(c)
         k += 1
     return fp
 
-# Example dataset for each category
+# Example dataset
 top_wear_data = [
     [["a"],["b"],["c"],["b","e"],["c"],["f"],["g"],["a","b","e"]],
     [["a"],["d"],["b","c"],["c"],["f","g"],["c","h"]],
     [["b"],["c"],["a","d"],["e"],["b"],["f"],["c","d","f","g","h"]],
-    [["c"],["e","c"],["e","h"]]
+    [["c"],["e","c"],["e","h"]] 
 ]
 
-# Minimum support threshold
 min_support = 3
 
-# Perform GSP algorithm for each category
+# Run GSP
 top_wear_result = gsp(top_wear_data, min_support)
 
+# ---------- TABULAR OUTPUT ----------
+patterns_by_length = defaultdict(list)
 
-# Output the frequent sequential patterns for each category
-print("Frequent Sequential Patterns - Top Wear:")
-if top_wear_result:
-    for pattern, support in top_wear_result.items():
-        print(f"Pattern: {pattern}, Support: {support}")
-else:
-    print("No frequent sequential patterns found in Top Wear.")
+for pattern, support in top_wear_result.items():
+    patterns_by_length[len(pattern)].append((pattern, support))
+
+print("\nFrequent Sequential Patterns - Top Wear\n")
+
+for length in sorted(patterns_by_length):
+    print(f"{length}-Length Patterns")
+    print("-" * 30)
+    print(f"{'Pattern':20} {'Support'}")
+    print("-" * 30)
+    for pattern, support in patterns_by_length[length]:
+        print(f"{str(pattern):20} {support}")
+    print()
+
  
  ```
 
