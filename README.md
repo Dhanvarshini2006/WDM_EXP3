@@ -37,6 +37,7 @@ for each wear category.</p>
 8. Visulaize the sequence patterns using matplotlib.
 </p>
 ### Program:
+
 ```
 from collections import defaultdict
 from itertools import combinations
@@ -99,6 +100,7 @@ else:
     print("No frequent sequential patterns found in Top Wear.")
  
  ```
+
 ### Output:
 
 <img width="422" height="845" alt="image" src="https://github.com/user-attachments/assets/00feef97-cc27-49f1-bf58-083e4cbfb9e2" />
