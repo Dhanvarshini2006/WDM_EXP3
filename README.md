@@ -114,6 +114,32 @@ for length in sorted(patterns_by_length):
 
 <img width="283" height="865" alt="image" src="https://github.com/user-attachments/assets/00c07eca-2dbd-4568-8991-af75fffe236c" />
 
+###Visualization:
+```
+import matplotlib.pyplot as plt
+
+# Function to visualize frequent sequential patterns with a line plot
+def visualize_patterns_line(result, category):
+    if result:
+        patterns = list(result.keys())
+        support = list(result.values())
+
+        plt.figure(figsize=(10, 6))
+        plt.plot([str(pattern) for pattern in patterns], support, marker='o', linestyle='-', color='blue')
+        plt.xlabel('Patterns')
+        plt.ylabel('Support Count')
+        plt.title(f'Frequent Sequential Patterns - {category}')
+        plt.xticks(rotation=90)
+        plt.tight_layout()
+        plt.show()
+    else:
+        print(f"No frequent sequential patterns found in {category}.")
+
+# Visualize frequent sequential patterns for each category using a line plot
+visualize_patterns_line(top_wear_result, 'Top Wear')
+```
+### Output:
+<img width="1144" height="566" alt="image" src="https://github.com/user-attachments/assets/4f03fc70-b25a-45af-9a64-bd3ea6c8a7a6" />
 
 ### Result:
 Successfully implemented GSP Algorithm In Python.
